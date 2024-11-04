@@ -25,5 +25,6 @@ x2 = (AB5(2, end) - x3*AB5(2, end - 2) - x4*AB5(2, end - 1)) / AB5(2, end - 3)
 x1 = (AB5(1, end) - x3*AB5(1, end - 2) - x4*AB5(1, end - 1) - x2*AB5(1, end - 3)) / AB5(1, end - 4)
 
 X = [x1 x2 x3 x4]'
+A\B
 
 [A * X B]

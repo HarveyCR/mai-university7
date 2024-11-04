@@ -20,14 +20,14 @@ AB(4, :) - AB(2, :) .*AB(4, 2)/AB(2,2)]
 
 #3
 AB = AB2([1, 2, 4, 3], :)
-AB3 = [AB(1, :); AB(2, :); AB(3, :);...
-AB(4, :) - AB(3, :) .*AB(4, 3)/AB(3,3)]
+AB3 = [AB(1, :); AB(2, :); AB(3, :); AB(4, :) - AB(3, :) .*AB(4, 3)/AB(3,3)]
 
-x4 = AB3(4, end)/AB3(4, end - 1);
-x3 = (AB3(3, end) - x4*AB3(3, end - 1)) / AB5(3, end-2);
+x4 = AB3(4, end) / AB3(4, end - 1);
+x3 = (AB3(3, end) - x4*AB3(3, end - 1)) / AB3(3, end - 2);
 x2 = (AB3(2, end) - x3*AB3(2, end - 2) - x4*AB3(2, end - 1)) / AB3(2, end - 3);
 x1 = (AB3(1, end) - x3*AB3(1, end - 2) - x4*AB3(1, end - 1) - x2*AB3(1, end - 3)) / AB3(1, end - 4);
 
 X = [x1;x2;x3;x4]
 
+A\B
 
