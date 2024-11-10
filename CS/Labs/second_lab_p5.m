@@ -76,4 +76,3 @@ x1 = (AB3(1, end) - x3*AB3(1, end - 2) - x4*AB3(1, end - 1) - x2*AB3(1, end - 3)
 X = [x3;x2;x1;x4]
 
 A\B
-
