@@ -1,0 +1,13 @@
+a=1; 
+f=0:pi/16:4*pi; 
+r=a*;figure ('Name','Спираль Архимеда'), 
+polar(f, r, 'r'), 
+grid on,ylabel ('\ita'), xlabel('\itphi')
+
+a=1; 
+f=0:pi/16:4*pi; 
+r1=a.*f.*cos(f); 
+r2=a.*f.*sin(f); 
+figure ('Name','Спираль Архимеда'), 
+plot(r1,r2, 'r'), 
+grid on,ylabel ('\ita'), xlabel('\itphi')
