@@ -1,17 +1,13 @@
-% Бесконечно вращающаяся 3D елка с падающими снежинками
 clc;
 clear;
-
-% Настройка фигуры
 figure;
 hold on;
 axis equal;
 axis off;
 
-% Принудительно устанавливаем фиксированное положение камеры
-view(3); % Установить вид 3D
-az = 45; % Азимут камеры
-el = 30; % Элеватор камеры
+view(3); 
+az = 45; 
+el = 30; 
 set(gca, 'CameraPosition', [3, 3, 3]); % Камера на фиксированном месте
 set(gca, 'CameraTarget', [0, 0, 0]); % Точка фокуса (центр сцены)
 set(gca, 'CameraUpVector', [0, 0, 1]); % Направление вверх для камеры
@@ -60,18 +56,17 @@ set(h, 'Parent', treeGroup); % Добавление звезды в группу
 lightangle(-45, 30);
 lighting gouraud;
 camlight;
-title('3D Вращающаяся Елка с Падающими Снежинками');
+title('Новогодняя Елка');
 
 % Параметры снежинок
-num_snowflakes = 50; % Уменьшено количество снежинок
-% Генерация случайных позиций снежинок
+num_snowflakes = 50;
 snowflakeX = rand(1, num_snowflakes) * 4 - 2; % Случайные X-позиции
 snowflakeY = rand(1, num_snowflakes) * 4 - 2; % Случайные Y-позиции
 snowflakeZ = rand(1, num_snowflakes) * 2 + 2; % Случайные Z-позиции (высота)
 snowflakes = scatter3(snowflakeX, snowflakeY, snowflakeZ, 50, 'w', 'filled'); % Снежинки
 
-% Скорость падения снежинок (замедление падения)
-fallingSpeed = rand(1, num_snowflakes) * 0.03 + 0.02; % Падение медленнее
+% Скорость падения снежинок 
+fallingSpeed = rand(1, num_snowflakes) * 0.03 + 0.02;
 
 % Анимация бесконечного вращения с изменением цвета градиента и падением снега
 angle = 0; % Начальный угол
@@ -108,8 +103,7 @@ while true
     % Увеличиваем угол
     angle = angle + 1;
     if angle >= 360
-        angle = 0; % Сброс угла после полного оборота
+        angle = 0; 
     end
-    
-    pause(0.03); % Контроль скорости вращения
+    pause(0.03); 
 end
