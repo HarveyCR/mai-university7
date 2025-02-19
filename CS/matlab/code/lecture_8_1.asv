@@ -1,0 +1,18 @@
+%a = randi([1,10], 1, 5);
+%a(a > 2);
+% t = (a > 2) ? true : false; - тернарная операция
+% if (2>1) t = true; end;
+
+x = 3;
+if (x < 0)
+    y = 0;
+elseif (x<5)
+        y = x;
+    else
+        y = 5;
+end
+
+
+switch (variable)
+    value1 : stataments1
+    value1 : stataments1
