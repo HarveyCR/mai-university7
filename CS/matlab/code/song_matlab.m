@@ -29,7 +29,6 @@ for i = 1:size(song, 1)
     songWave = [songWave, wave];
 end
 
-% Play the song infinitely
 while true
     sound(songWave, fs);
     pause(length(songWave) / fs);
