@@ -1,0 +1,29 @@
+clc; clear; close all;
+
+function dydt = dampedPendulum(t, y)
+    g = 9.81; L = 1; b = 0.2;    
+    dydt = [y(2); -g/L * sin(y(1)) - b * y(2)];  
+end
+
+g = 9.81;
+L = 1;
+theta0 = pi/4;
+omega0 = 0;
+
+tspan = 0:0.01:10;
+
+odefun = @(t, y) [y(2); -g/L * sin(y(1))];
+[t, y] = ode45(odefun, tspan, [theta0, omega0]);
+
+figure;
+for i = 1:length(t)
+    clf;
+    x = L * sin(y(i,1));
+    y_pos = -L * cos(y(i,1));
+    
+    plot([0, x], [0, y_pos], 'b-', 'LineWidth', 2); hold on;
+    plot(x, y_pos, 'ro', 'MarkerSize', 10, 'MarkerFaceColor', 'r');
+    axis([-L L -1.5 0.5]); grid on;
+    xlabel('X'); ylabel('Y');
+    pause(0.0005);
+end

@@ -1,0 +1,4 @@
+close all; clear; clc;
+r = 1; n = 50;
+theta = linspace(0, 2*pi, n);
+Ax = r * cos(theta);
