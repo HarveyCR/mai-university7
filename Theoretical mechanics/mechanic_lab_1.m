@@ -2,17 +2,14 @@ clc;
 clear;
 
 Q = [-cos(pi/3) 0 sin(pi/3)] * 3 * 10^3;
-G = [cos(pi/6) 0 -sin(pi/6)] * 2 * 10^3;
+G = [0 0 1] * 2 * 10^3;
 a = [0 60 0] * 10^(-2);
 b = [0 20 0] * 10^(-2);
 c = [0 40 0] * 10^(-2);
 R = 20 * 10^(-2);
 r = [5 * 10^(-2) 0 0];
 
-force_vectorQ = [Q * sin(pi/3) 0 -Q * cos(pi/3)];
-force_vectorG = [0 0 -G];
-
-syms RAx  RAz RBx  RBz P;
+syms RAx  RAz RBx RBz P;
 
 PC = [cos(pi/6) 0 -sin(pi/6)] * P;
 RA=[RAx 0 RAz];
@@ -36,7 +33,7 @@ mPz=mG;
 for i=1:length(mG)
  G=[0 0 -mG(i)]*10^3;
  % Составляем уравнения равновесия тела
- eqnP=RA+RB+Q+G+PC+Q==[0 0 0];
+ eqnP=RA+RB+Q+G+PC==[0 0 0];
  
 eqnM=cross(RA,V2A)+cross(RB,V2B)+cross(Q,V2Q)+cross(G,V2G)+cross(PC,V2PC)==[0 0 0];
  %Решаем составленные уравнения

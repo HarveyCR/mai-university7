@@ -1,0 +1,54 @@
+Matvey_lab_stats;
+
+FQ = [cos(pi/3) 0 sin(pi/3)] * 4000;
+FG = [0 0 -1] * G;
+
+syms RAx RAz RBx RBz P1 P2;
+
+PC1 = [-1 0 0] * P1;
+PC2 = [1 0 0] * P2;
+RA=[RAx 0 RAz];
+RB=[RBx 0 RBz];
+
+V2A = [0 0 0];
+V2Q = V2A + [0 0.2 0] + [-0.1 0 0] + [0 0.1 0];
+V2G = V2A + [0 0.2 0] + 3 * [0 0.1 0];
+V2B = V2A + [0 0.2 0] + 2 * [0 0.1 0] + [0 0.3 0] ;
+V2P1 = V2A + [0 0.2 0] + 2 * [0 0.1 0] + 2 * [0 0.3 0] + [0 -cos(pi/3) sin(pi/3)] * 0.1;
+V2P2 = V2A + [0 0.2 0] + 2 * [0 0.1 0] + 2 * [0 0.3 0] + [0 cos(pi/3) -sin(pi/3)] * 0.1;
+
+mG=0:0.5:6;
+mRAx=mG;
+mRAz=mG;
+mRBx=mG;
+mRBz=mG;
+mP1=mG;
+mP2=mG;
+
+for i=1:length(mG)
+ G=[0 0 -mG(i)]*10^3;
+ % Составляем уравнения равновесия тела
+ eqnP=RA+RB+FQ+G+PC1+PC2==[0 0 0];
+ 
+eqnM=cross(RA,V2A)+cross(RB,V2B)+cross(FQ,V2Q)+cross(G,V2G)+cross(PC1,V2P1)+cross(PC2,V2P2)==[0 0 0];
+ %Решаем составленные уравнения
+ [FRAx, FRAz, FRBx, FRBz, FP1, FP2]=solve([eqnP
+eqnM],[RAx RAz RBx RBz P1 P2]);
+ mRAx(i)=eval(FRAx);
+ mRAz(i)=eval(FRAz);
+ mRBx(i)=eval(FRBx);
+ mRBz(i)=eval(FRBz);
+ mP1(i)=eval(FP1);
+ mP2(i)=eval(FP2);
+end
+figure
+hold on
+xlabel('G');
+ylabel('mRAx,...')
+
+plot(mG,mRAx,'--r', 'LineWidth',2);
+plot(mG,mRAz,'--b', 'LineWidth',2);
+plot(mG,mRBx,':g', 'LineWidth', 1);
+plot(mG,mRBz,':m', 'LineWidth', 1);
+plot(mG,mP1, 'r');
+plot(mG,mP2, 'g');
