@@ -1,13 +1,18 @@
-QS = 4 * 10^3;
-GS = 2 * 10^3;
-aS = 20 * 10^(-2);
-bS = 10 * 10^(-2);
-cS = 30 * 10^(-2);
-RS = 10 * 10^(-2);
-rS = 10 * 10^(-2);
+P = [0 -45 0];
+syms RAx  RAy RBx RBy;
 
-syms P;
+RA=[RAx RAy 0];
+RB=[-RBx*sin(pi/3) RBy*cos(pi/3) 0];
 
-My = 2*rS*P*sin(pi/3) + RS*QS * sin(pi/3);
+VA = [0 0 0];
+VB = VA + [0 -1 0];
+VC = VA + [-0.5 -1 0];
 
-SolMy = solve(My, P);
+
+eqnP = RA + RB + P == [0 0 0];
+ 
+eqnM = cross(RA, VA) + cross(RB, VB) + cross(P, VC) == [0 0 0];
+
+[FRAx, FRAy, FRBx, FRBy] = solve([eqnP eqnM],[RAx RAy RBx RBy])
+
+eval(FRBx) + eval(FRBy)

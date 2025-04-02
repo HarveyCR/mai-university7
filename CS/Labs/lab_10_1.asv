@@ -1,0 +1,23 @@
+function S = sum_series_recursive_nested(x, tol)
+% Рекурсивное вычисление суммы ряда с использованием вложенной функции.
+% Входные параметры:
+%   x   - значение переменной
+%   tol - допустимая погрешность (опционально, по умолчанию 1e-4)
+if nargin < 2, tol = 1e-4; end
+% Начинаем рекурсию с k = 0 и первым членом a0 = 1/4
+[S, ~] = rec_sum(0, x^(0)/4^(1));
+
+    function [S_local, a_local] = rec_sum(k, a_k)
+        % Точное значение вклада, если |a_k| меньше tol, прекращаем рекурсию
+        if abs(a_k) < tol
+            S_local = a_k;
+        else
+            % Вычисляем следующий член ряда через коэффициент перехода: a_{k+1} = a_k*(x^2/4)
+            coeff = x^2/4;
+            a_next = a_k * coeff;
+            [S_next, ~] = rec_sum(k+1, a_next);
+            S_local = a_k + S_next;
+        end
+    end
+end
+sum_series_recursive_nested(1)
