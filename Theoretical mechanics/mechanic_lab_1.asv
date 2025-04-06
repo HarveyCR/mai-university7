@@ -1,0 +1,60 @@
+clc;
+clear;
+
+Q = [-cos(pi/3) 0 sin(pi/3)] * 3 * 10^(-3;
+G = [cos(pi/6) 0 -sin(pi/6)] * 2 * 10^(-3);
+a = [0 60 0] * 10^(-2);
+b = [0 20 0] * 10^(-2);
+c = [0 40 0] * 10^(-2);
+R = 20 * 10^(-2);
+r = [5 * 10^(-2) 0 0];
+
+force_vectorQ = [Q * sin(pi/3) 0 -Q * cos(pi/3)];
+force_vectorG = [0 0 -G];
+
+syms RAx  RAz RBx  RBz Pz;
+
+P = [0 0 Pz];
+RA=[RAx 0 RAz];
+RB=[RBx 0 RBz];
+
+rQ = [-cos(pi/3) 0 sin(pi/3)] * 0.1;
+rP = [cos(pi/6) 0 -sin(pi/6)] * R;
+
+V2A = [0 0 0];
+V2Q = V2A + a + r;
+V2B = V2A + a + 3*b;
+V2G = V2A + a + 3*b + c;
+V2P = V2A + a + 3*b + c + [0 0 R];
+
+mG=0:0.5:6;
+mRAx=mG;
+mRAz=mG;
+mRBx=mG;
+mRBz=mG;
+mPz=mG*sin(pi/6);
+
+for i=1:length(mG)
+ G=[0 0 -mG(i)]*10^3;
+ % Составляем уравнения равновесия тела
+ eqnP=RA+RB+Q+G+P+Q==[0 0 0];
+ 
+eqnM=cross(RA,V2A)+cross(RB,V2B)+cross(Q,V2Q)+cross(G,V2G)+cross(P,V2P)==[0 0 0];
+ %Решаем составленные уравнения
+ [FRAx, FRAz, FRBx, FRBz, FPz]=solve([eqnP
+eqnM],[RAx  RAz RBx  RBz Pz]);
+ mRAx(i)=eval(FRAx);
+ mRAz(i)=eval(FRAz);
+ mRBx(i)=eval(FRBx);
+ mRBz(i)=eval(FRBz);
+ mPz(i)=eval(FPz);
+end
+figure
+hold on
+xlabel('G');
+ylabel('mRAx,...')
+plot(mG,mRAx,'r');
+plot(mG,mRAz,'b');
+plot(mG,mRBx,'g');
+plot(mG,mRBz,'m');
+plot(mG,mPz,'k');
