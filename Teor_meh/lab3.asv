@@ -1,5 +1,13 @@
-F2 = 2;
-F3 = 5;
+r = 30; % радиус круга в сантиметрах
+theta = linspace(0, 2*pi, 1000); % углы от 0 до 2π
+x = r * cos(theta); % координаты X
+y = r * sin(theta); % координаты Y
 
-M1 = -8 * F2 * 6/8
-M2 = F3 * 
+
+figure;
+plot(x, y, 'LineWidth', 2); % рисуем круг
+axis equal; % одинаковый масштаб по осям
+grid on;
+xlabel('X (см)');
+ylabel('Y (см)');
+title('Круг радиусом 30 см');

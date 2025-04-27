@@ -1,2 +1,2 @@
-sin(pi/4)
-cos(pi/4)
+gm = importGeometry("Part4.stl");
+pdegplot(gm, "FaceLabels", "on");
