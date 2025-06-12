@@ -1,2 +1,10 @@
-gm = importGeometry("Part4.stl");
-pdegplot(gm, "FaceLabels", "on");
+% Исходный столбец B
+B = [4; 10; 3; 5; 1];
+
+% Вызов пирамидальной сортировки
+B_sorted = heapsort(B);
+
+% Показать результат
+disp(B_sorted);
+
+[70; 77; 82; 64; 18; 6; 26;23]
