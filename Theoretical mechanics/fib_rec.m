@@ -5,8 +5,3 @@ function f = fib_rec(n)
     else f = fib_rec(n-1) + fib_rec(n-2);  % рекурсивный шаг
     end
 end
-
-
-fib_rec(10)
-ans =
-    55
