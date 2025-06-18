@@ -1,4 +1,4 @@
-function B = heapifydownN1(B, i, l)
+    function B = heapifydownN1(B, i, l)
 % HEAPIFYDOWNN1 Просеивание вниз для мин-кучи
     left  = 2 * i;
     if left > l

@@ -52,3 +52,4 @@ function B = heapsort(B)
 end
 
 % heapsort([70; 77; 82; 64; 18; 6; 26; 23])
+heapsort([70; 77; 82; 64; 18; 6; 26; 23](::))
