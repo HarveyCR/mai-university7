@@ -1,54 +1,43 @@
-function B = heapsort(B)
-% HEAPSORT Сортировка массива-матрицы B по первому столбцу методом "пирамидальной сортировки"
-    n = size(B,1);
-
-    % 1) Построение мин-кучи: вставляем по одному элементу
-    for i = 2 : n
-        B = heapifyup1(B, i);
-    end
-
-    % 2) Извлечение элементов из кучи в конец массива
-    for l = n : -1 : 2
-        % Меняем корень (минимум) с последним элементом текущей кучи
-        B([1 l], :) = B([l 1], :);
-        % Восстанавливаем мин-кучу на префиксе [1..l-1]
-        B = heapifydownN1(B, 1, l-1);
-    end
-
-    function B = heapifydownN1(B, i, l)
-% HEAPIFYDOWNN1 Просеивание вниз для мин-кучи
-    left  = 2 * i;
-    if left > l
-        return;
-    end
-    right = left + 1;
-    smallest = i;
-
-    if left <= l && B(left,1) < B(smallest,1)
-        smallest = left;
-    end
-    if right <= l && B(right,1) < B(smallest,1)
-        smallest = right;
-    end
-
-    if smallest ~= i
-        B([i smallest], :) = B([smallest i], :);
-        B = heapifydownN1(B, smallest, l);
-    end
-    end 
-
-    function B = heapifyup1(B, i)
-    % HEAPIFYUP1 Просеивание вверх для мин-кучи
-        if i == 1
-            return;
+function sortedArray = heapsort(array)
+    function heapify(array, n, i)
+        largest = i; % Initialize largest as root
+        left = 2 * i; % left = 2*i
+        right = 2 * i + 1; % right = 2*i + 1
+    
+        % If left child is larger than root
+        if left <= n && array(left) > array(largest)
+            largest = left;
         end
-        parent = floor(i/2);
+    
+        % If right child is larger than largest so far
+        if right <= n && array(right) > array(largest)
+            largest = right;
+        end
+    
+        % If largest is not root
+        if largest ~= i
+            array([i, largest]) = array([largest, i]); % Swap
+    
+            % Recursively heapify the affected sub-tree
+            heapify(array, n, largest);
+        end
+    end
+    n = length(array);
+    
+    % Build heap (rearrange array)
+    for i = floor(n/2):-1:1
+        heapify(array, n, i);
+    end
+    
+    % One by one extract elements from heap
+    for i = n:-1:2
+        % Move current root to end
+        array([1, i]) = array([i, 1]);
         
-        if B(i,1) < B(parent,1)
-            B([i parent], :) = B([parent i], :);
-            B = heapifyup1(B, parent);
-        end
+        % Call heapify on the reduced heap
+        heapify(array, i-1, 1);
     end
+    
+    sortedArray = array;
 end
 
-% heapsort([70; 77; 82; 64; 18; 6; 26; 23])

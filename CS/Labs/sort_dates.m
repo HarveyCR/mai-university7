@@ -1,17 +1,17 @@
 % Параметры
-sizes    = [10000, 20000, 30000, 40000, 50000, 60000, 70000];
-maxValue = 100000;
+sizes    = [1000, 2000, 3000, 4000, 5000, 6000, 7000];
+maxValue = 10000;
 nSizes   = numel(sizes);
-nRuns    = 1000;  % число генерируемых векторов на каждый размер
+nRuns    = 1;  % число генерируемых векторов на каждый размер
 
 % Список тестируемых функций и их имёна
 funcs = {
     @sort_bubble,           'Bubble Sort';
-    @sort_simple_selection, 'Selection Sort';
-    @insertion_sort,        'Insertion Sort';
-    @heapsort,              'Heap Sort';
-    @quick_sort,            'Quick Sort';
-    @MergeSort,             'Merge Sort'
+    @sort_simple_selec, 'Selection Sort';
+    @sort_int,        'Insertion Sort';
+    @sort_heap,              'Sort Heap';
+    @sort_quick,            'Sort Quick';
+    @sort_merge,             'Sort Merge'
 };
 nAlgos = size(funcs,1);
 

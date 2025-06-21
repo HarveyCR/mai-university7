@@ -1,12 +1,17 @@
-function s = insertion_sort(mass)
-    for i = 2:length(mass)
-        tmp = mass(i);
+function sortedArray = insertion_sort(inputArray)
+    n = length(inputArray);
+    sortedArray = inputArray; % Create a copy of the input array
+
+    for i = 2:n
+        key = sortedArray(i);
         j = i - 1;
-        while j >= 1 && (tmp < mass(j))
-            mass(j+1) = mass(j);
-            j =  j - 1;
+
+        % Move elements of sortedArray[0..i-1], that are greater than key,
+        % to one position ahead of their current position
+        while j >= 1 && sortedArray(j) > key
+            sortedArray(j + 1) = sortedArray(j);
+            j = j - 1;
         end
-        mass(j+1) = tmp;
+        sortedArray(j + 1) = key;
     end
-    s = mass;
 end

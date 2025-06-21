@@ -1,12 +1,12 @@
-function sortedArray = MergeSort(inputArray)
+function sortedArray = mergeSort(inputArray)
     if length(inputArray) <= 1
         sortedArray = inputArray;
         return;
     end
     
     mid = floor(length(inputArray) / 2);
-    leftHalf = MergeSort(inputArray(1:mid));
-    rightHalf = MergeSort(inputArray(mid+1:end));
+    leftHalf = mergeSort(inputArray(1:mid));
+    rightHalf = mergeSort(inputArray(mid+1:end));
     
     sortedArray = merge(leftHalf, rightHalf);
 end

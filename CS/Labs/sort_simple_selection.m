@@ -1,15 +1,20 @@
-function s = sort_simple_selection(mass)
-    for i = 1:length(mass)-1
-      k = i;
-      tmp = mass(i);
-      for j = i+1:length(mass)
-        if mass(j)<tmp
-          k = j;
-          tmp = mass(j);
+function sortedArray = sort_simple_selection(array)
+    n = length(array);
+    for i = 1:n-1
+        % Assume the minimum is the first element
+        minIndex = i;
+        % Test against elements after i to find the smallest
+        for j = i+1:n
+            if array(j) < array(minIndex)
+                minIndex = j;
+            end
         end
-      end
-      mass(k) = mass(i);
-      mass(i) = tmp;
+        % Swap the found minimum element with the first element
+        if minIndex ~= i
+            temp = array(i);
+            array(i) = array(minIndex);
+            array(minIndex) = temp;
+        end
     end
-    s = mass;
+    sortedArray = array;
 end

@@ -1,0 +1,25 @@
+function sorted = sort_bubble(arr)
+
+
+    if numel(arr) <= 1
+        % Base case: arrays of length 0 or 1 are already "sorted"
+        sorted = arr;
+    else
+        % Compare the last element to the max of the rest
+        if arr(end) >= max(arr(1:end-1))
+            % Last element is already >= everything before it:
+            % sort the first n-1 recursively, then append the maximum
+            firstPart = bubble_sort_one_line(arr(1:end-1));
+            lastElem  = max(arr);
+        else
+            % Otherwise "swap" it one step toward the front and recurse:
+            % take everything up to the second‑last, then put the last element,
+            % then sort that slightly‑modified array
+            swapped   = [ arr(1:end-2), arr(end) ];
+            firstPart = bubble_sort_one_line(swapped);
+            lastElem  = arr(end-1);
+        end
+        % Concatenate the recursively sorted part with the final element
+        sorted = [ firstPart, lastElem ];
+    end
+end
