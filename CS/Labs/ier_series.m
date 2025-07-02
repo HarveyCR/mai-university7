@@ -1,81 +1,59 @@
-% fourier_piecewise_linear.m
-% Скрипт для разложения в ряд Фурье кусочно‑линейной функции,
-% построения частичных сумм и графика среднеквадратического отклонения
+syms x k;
 
-clear; close all; clc;
+% Определить кусочную функцию
+f_x = piecewise(x > 0, 0, x < 0, 1);
+% Аналитически вычислить коэффициенты Фурье
+a0 = (1/pi) * int(f_x, x, -pi, pi);
+a_k = (1/pi) * int(f_x * cos(k*x), x, -pi, pi);
+b_k = (1/pi) * int(f_x * sin(k*x), x, -pi, pi);
 
-%% Параметры
-L = pi;               % полупериод, функция задана на [-L, L]
-T = 2*L;              % полный период
-N_max = 50;           % максимальное число гармоник для расчёта
-N_plot = [1,3,5,10];  % номера гармоник, для которых рисуем S_N
-nx = 1000;            % число точек для графиков
+% Выбер набора значений для частичных сумм
+N_values = [1, 2, 4, 8, 16, 32];
+colors = lines(numel(N_values)); 
 
-x = linspace(-L, L, nx);
-
-%% а) Задание кусочно‑линейной функции f(x)
-% Пример варианта: 
-%  f(x) = 
-%    0,   -pi <= x < 0
-%    x/L, 0 <= x <= pi
-
-f = zeros(size(x));
-for i = 1:length(x)
-    if x(i) < 0
-        f(i) = 0;
-    else
-        f(i) = x(i)/L;
-    end
+% Figure 1: Частичные суммы
+figure('Name', 'Частичные суммы рядов Фурье');
+hold on;
+for idx = 1:numel(N_values)
+    N = N_values(idx);
+    % Вычислить частичную сумму символически
+    S_N = a0/2 + symsum(a_k*cos(k*x) + b_k*sin(k*x), k, 1, N);
+    
+    % Преобразование в анонимную функцию для построения графика
+    f_sum = matlabFunction(S_N, 'Vars', x);
+    
+    % Plot частичной суммы
+    fs = fplot(f_sum, [-2*pi, 2*pi], 'LineWidth', 1.5);
+    fs.Color = colors(idx, :);
+    
+    legend_entries{idx} = sprintf('N = %d', N);
 end
 
-%% б) Вычисление коэффициентов a0, a_k и b_k
-a0 = (1/L) * trapz(x, f);          % интеграл по одному периоду
-a0 = a0;                           % уже = 1/pi * ∫ f(x)dx если L=pi
+% Постройение графика исходной функции для сравнения
+xd = [-2*pi, -pi, -pi, 0, 0, pi, pi, 2*pi];
+yd = [0,    0,   1,    1,  0,  0,  1,   1];
+plot(xd, yd, 'r--', 'LineWidth', 2);
+legend_entries{end+1} = 'f(x)';
 
-a = zeros(1, N_max);
-b = zeros(1, N_max);
-for k = 1:N_max
-    a(k) = (1/L) * trapz(x, f .* cos(k * pi * x / L));
-    b(k) = (1/L) * trapz(x, f .* sin(k * pi * x / L));
-end
-
-%% в) Построение частичных сумм S_N(x)
-S = zeros(length(N_plot), length(x));
-for idx = 1:length(N_plot)
-    N = N_plot(idx);
-    S(idx, :) = a0/2 * ones(size(x));
-    for k = 1:N
-        S(idx, :) = S(idx, :) + a(k)*cos(k*pi*x/L) + b(k)*sin(k*pi*x/L);
-    end
-end
-
-%% г) Отрисовка графиков частичных сумм
-figure('Name','Частичные суммы ряда Фурье','NumberTitle','off');
-plot(x, f, 'k', 'LineWidth', 1.5); hold on;
-colors = lines(length(N_plot));
-for idx = 1:length(N_plot)
-    plot(x, S(idx,:), 'LineWidth', 1.2, 'Color', colors(idx,:));
-end
-legend(['f(x)', arrayfun(@(n) sprintf('S_{%d}',n), N_plot,'Uni',0)]);
-xlabel('x'); ylabel('f, S_N'); 
-title('Частичные суммы ряда Фурье');
+legend(legend_entries, 'Location', 'best');
+xlabel('x');
+ylabel('f_N(x)');
+title('Частичные суммы ряда Фурье для ступенчатой функции');
 grid on;
+hold off;
 
-%% 2. Построение графика среднеквадратического отклонения
-sigma = zeros(1, N_max);
-for N = 1:N_max
-    % соберем S_N
-    SN = a0/2 * ones(size(x));
-    for k = 1:N
-        SN = SN + a(k)*cos(k*pi*x/L) + b(k)*sin(k*pi*x/L);
-    end
-    % среднеквадратичное отклонение по периоду
-    sigma(N) = sqrt( (1/T)*trapz(x, (f - SN).^2 ) );
+% Figure 2: Среднеквадратичное отклонение в зависимости от количества членов
+sigma = zeros(size(N_values));
+for idx = 1:numel(N_values)
+    N = N_values(idx);
+    S_N = a0/2 + symsum(a_k*cos(k*x) + b_k*sin(k*x), k, 1, N);
+    err_sq = (f_x - S_N)^2;
+    sigma(idx) = double(sqrt(int(err_sq, x, -pi, pi)));
 end
 
-figure('Name','Среднеквадратичное отклонение','NumberTitle','off');
-plot(1:N_max, sigma, 'LineWidth', 1.5);
-xlabel('N (число гармоник)'); 
-ylabel('\sigma_N'); 
-title('Сходимость в среднем квадратическом смысле');
+figure('Name', 'Среднеквадратичное отклонение');
+plot(N_values, sigma, '-o', 'LineWidth', 1.5);
+xlabel('Количество терминов (N)');
+ylabel('Среднеквадратичное отклонение');
+title('Среднеквадратичное отклонение аппроксимации ряда Фурье');
 grid on;
