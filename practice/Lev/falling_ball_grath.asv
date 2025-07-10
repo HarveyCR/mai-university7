@@ -1,8 +1,0 @@
-function falling_ball_grath()
-    data = sortrows(readmatrix('myData.xlsx'), 2);
-    
-    max_value = data[];      
-    min_value = min(A);      
-    mean_value = mean(A);
-    
-end

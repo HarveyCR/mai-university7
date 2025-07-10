@@ -1,6 +1,6 @@
 function falling_time(H)
-    t = sqrt(2 * H / 9.81) .* H;
-    numbers = 0.8 + (1.1 - 0.8) * rand(1, length(t));
-    result = [H' round(t.*numbers, 3)'];
+    t = sqrt(2 * H / 9.81)';
+    infelicity = 0.8 + (1.1 - 0.8) * rand(1, 10);
+    result = [H' round(infelicity.*t, 3)];
     writematrix(result, 'falling_ball.xlsx');
 end
