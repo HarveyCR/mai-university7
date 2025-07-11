@@ -2,7 +2,7 @@ function [max_value, min_value, mean_value, k_best] = falling_ball_grath()
     mx = readmatrix('falling_ball.xlsx');
     H = mx(:, 1);
     times = mx(:, 2:end);
-    times = sortrows(times')';   
+    times = sort(times, 2);   
     mx2 = [H times];
     writematrix(mx2, 'falling_ball_s.xlsx');
 
@@ -14,7 +14,6 @@ function [max_value, min_value, mean_value, k_best] = falling_ball_grath()
     mx2 = readmatrix('falling_ball_s.xlsx');  
     H = mx2(:,1);
     times = mx2(:,2:end);
-    mean_t = mean(times, 2);                 
     
     k_vals = 0.5:0.001:2;
     
