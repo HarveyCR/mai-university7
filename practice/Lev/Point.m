@@ -1,4 +1,3 @@
-% Point.m
 classdef Point
     properties
         x
@@ -6,7 +5,6 @@ classdef Point
     end
     methods
         function obj = Point(x, y)
-            % Constructor for Point class
             if nargin > 0
                 obj.x = x;
                 obj.y = y;
