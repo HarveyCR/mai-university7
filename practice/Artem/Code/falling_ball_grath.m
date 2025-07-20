@@ -11,9 +11,9 @@ function [max_value, min_value, mean_value, k_best] = falling_ball_grath()
     stats.Properties.VariableNames{'mean_Time'} = 'MeanTime';
     stats.Properties.VariableNames{'max_Time'} = 'MaxTime';
     
-    min_value  = stats.MinTime;    % вектор минимальных времен для каждой высоты
-    mean_value = stats.MeanTime;   % вектор средних времен для каждой высоты
-    max_value  = stats.MaxTime;    % вектор максимальных времен для каждой высоты
+    min_value  = stats.MinTime;
+    mean_value = stats.MeanTime;
+    max_value  = stats.MaxTime; 
     disp(stats);
 
     M = readmatrix('falling_ball.xlsx');

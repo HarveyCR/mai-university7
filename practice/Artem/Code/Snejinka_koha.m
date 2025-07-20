@@ -1,8 +1,3 @@
-%% Koch Snowflake Generator in MATLAB
-% This script builds and plots the Koch snowflake starting
-% from an equilateral triangle of side length L=1 down to
-% a minimum segment length Lmin=0.01.
-
 L = 1;
 Lmin = 0.01;
 
