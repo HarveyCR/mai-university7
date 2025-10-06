@@ -19,3 +19,4 @@ function [Fx, Fy] = force_components(force, angle)
 
     hold off;
 end
+    
