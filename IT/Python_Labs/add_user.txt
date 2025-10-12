@@ -1,0 +1,2 @@
+INSERT IGNORE INTO users (telegram_id, username)
+VALUES ('Иван Иванв', 'ivan123');

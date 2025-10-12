@@ -1,0 +1,1 @@
+SELECT joke_text FROM jokes WHERE joke_id = 1;
