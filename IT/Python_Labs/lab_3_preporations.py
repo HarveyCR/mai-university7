@@ -89,7 +89,7 @@ def task4(string):
 
 
 def main():
-    string = "НиГа НиГа z z z w w w"
+    string = "wwww"
     print(task28(int(input())))
 
 

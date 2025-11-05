@@ -19,11 +19,12 @@ def tsk_11():
 
 
 def tsk_10():
-    print(not (bool(int(input()) // 100)))
+    a = int(input())
+    print(a > 9 and a < 100)
 
 
 def tsk_9():
-    print(input(), "Сказала Она!", sep=" - ", end='\n')
+    print(input(), end=' - Сказала Она!')
 
 
 def tsk_8():
@@ -65,8 +66,7 @@ def tsk_2():
 
 
 def main():
-    int(3.999)
-
+    tsk_11()
 
 if __name__ == '__main__':
     main()
